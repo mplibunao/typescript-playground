@@ -4,20 +4,34 @@
 // const g = [3];
 
 // ---------------------- Overloading functions
-// Update overloaded reserve function with a third call signature
-// type Reserve = {
-//   (from: Date, to: Date, destination: string): Reservation
-//   (from: Date, destination: string): Reservation
-//   (destination: string): Reservation
-// }
+// Update overloaded reserve function with a third call signature that just takes a destination without an explicit start date
+type Reservation = unknown;
+type Reserve = {
+  (from: Date, to: Date, destination: string): Reservation;
+  (from: Date, destination: string): Reservation;
+  (destination: string): Reservation;
+};
 
-// let reserve: Reserve = (
-//   fromOrDestination: Date|string,
-//   toOrDestination?: Date|string,
-//   destination?: string
-// ) => {
-
-// }
+let reserve: Reserve = (
+  fromOrDestination: Date | string,
+  toOrDestination?: Date | string,
+  destination?: string
+) => {
+  if (
+    fromOrDestination instanceof Date &&
+    toOrDestination instanceof Date &&
+    destination
+  ) {
+    // Book round trip
+  } else if (
+    fromOrDestination instanceof Date &&
+    typeof toOrDestination === "string"
+  ) {
+    // Book one-way trip
+  } else if (typeof fromOrDestination === "string") {
+    // Book a trip right away
+  }
+};
 
 // ------------------------- Generics
 function call<T extends unknown[], R>(f: (...args: T) => R, ...args: T): R {
